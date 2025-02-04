@@ -18,7 +18,7 @@ install_package() {
   local pkg="$1"
   if ! dpkg -s "$pkg" &>/dev/null; then
     echo "Installing $pkg..."
-    apt-get install -y --no-install-recommends "$pkg" &>/dev/null
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "$pkg"
   fi
 }
 
@@ -53,7 +53,6 @@ setup_citus_repository() {
 main() {
   apt-get update -qq
   arch_check
-  install_package "curl"
   install_package "gnupg"
   install_package "apt-transport-https"
   detect_ubuntu_codename
